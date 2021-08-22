@@ -143,9 +143,7 @@ char* remover_nome(char *nomes, int *size){
                 break;
             }
         }
-    }
-
-    if(flag_encontrou == 1){
+        if(flag_encontrou == 1){
         // calcula quantas letras tem entre o final do nome removido e o final da agenda
         apos = ((*size)+1) - (inicio + size_string + 1);   
 
@@ -153,14 +151,15 @@ char* remover_nome(char *nomes, int *size){
         for(j = 0; j < apos; j++) {
                 nomes[inicio + j] = nomes[inicio + j + (size_string+1)];
             }
-
-        *size -= (size_string + 1);
+        (*size) -= (size_string + 1);
+        if((*size) < 0) (*size) = 0;
         nomes = (char *) realloc(nomes, sizeof(char) * ((*size) + 1));
-        return nomes;
-    } else {
+        } else {
         printf("O nome nao esta na lista.");
-        return nomes;
+        }
     }
+
     free(string_nome);
     free(nome_remover);
+    return nomes;
 }
