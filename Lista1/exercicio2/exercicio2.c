@@ -130,6 +130,7 @@ char* remover_nome(char *nomes, int *size){
             }  
             i++;
             string_nome = (char *) realloc(string_nome, sizeof(char) * (size_string + 1));
+
             if(!string_nome) {
                 printf("Erro: falta de memoria3\n");
                 exit(1);
@@ -145,17 +146,17 @@ char* remover_nome(char *nomes, int *size){
         }
         if(flag_encontrou == 1){
         // calcula quantas letras tem entre o final do nome removido e o final da agenda
-        apos = ((*size)+1) - (inicio + size_string + 1);   
+            apos = ((*size)+1) - (inicio + size_string + 1);   
 
-        // traz esse numero de letras para as posiçoes a partir do inicio sequencialmente
-        for(j = 0; j < apos; j++) {
-                nomes[inicio + j] = nomes[inicio + j + (size_string+1)];
-            }
-        (*size) -= (size_string + 1);
-        if((*size) < 0) (*size) = 0;
-        nomes = (char *) realloc(nomes, sizeof(char) * ((*size) + 1));
+            // traz esse numero de letras para as posiçoes a partir do inicio sequencialmente
+            for(j = 0; j < apos; j++) {
+                    nomes[inicio + j] = nomes[inicio + j + (size_string+1)];
+                }
+            (*size) -= (size_string + 1);
+            if((*size) < 0) (*size) = 0;
+            nomes = (char *) realloc(nomes, sizeof(char) * ((*size) + 1));
         } else {
-        printf("O nome nao esta na lista.");
+            printf("O nome nao esta na lista.");
         }
     }
 
