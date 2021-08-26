@@ -55,6 +55,11 @@ void *incluir(void *pBuffer){
     char nome[10];
     (*(int *)pBuffer)++;
     pBuffer = realloc(pBuffer, (sizeof(int) + ((*(int *)pBuffer) * (sizeof(nome) + sizeof(int) * 2))));
+    if(!pBuffer) {
+        printf("erro de memoria (incluir 1)");
+        exit(1);
+    }
+    
     printf("Digite o nome: ");
     scanf("%s", nome);
     setbuf(stdin, NULL);
@@ -68,10 +73,6 @@ void *incluir(void *pBuffer){
     scanf("%d",(int *)(pBuffer + (sizeof(int) + (((*(int *)pBuffer)- 1) * (sizeof(nome) + sizeof(int) * 2)) + (sizeof(char) * 10) + sizeof(int))));
     setbuf(stdin, NULL);
 
-    if(!pBuffer) {
-        printf("erro de memoria (incluir 1)");
-        exit(1);
-    }
     return pBuffer;
 }
 
