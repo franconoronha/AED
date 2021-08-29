@@ -128,7 +128,7 @@ char* remover_nome(char *nomes, int *size){
                 size_string++;
                 i++;
             }  
-            i++;
+            if(nomes[i] != '\0')i++;
             string_nome = (char *) realloc(string_nome, sizeof(char) * (size_string + 1));
 
             if(!string_nome) {
