@@ -78,12 +78,16 @@ void incluir(void *pBuffer) {
 
 void listar(void *pBuffer) { 
     *(int *)(pBuffer + sizeof(int)) = 0;
-    while(*(int *)(pBuffer + sizeof(int)) < *(int *)pBuffer) {
-        printf("  Nome: %s\n", pessoas[*(int *)(pBuffer + sizeof(int))].nome);
-        printf("  Idade: %d\n", pessoas[*(int *)(pBuffer + sizeof(int))].idade);
-        printf("  Altura: %d\n", pessoas[*(int *)(pBuffer + sizeof(int))].altura);
-        printf("\n");
-        (*(int *)(pBuffer + sizeof(int)))++; 
+    if(*(int *)pBuffer > 0) { 
+        while(*(int *)(pBuffer + sizeof(int)) < *(int *)pBuffer) {
+            printf("  Nome: %s\n", pessoas[*(int *)(pBuffer + sizeof(int))].nome);
+            printf("  Idade: %d\n", pessoas[*(int *)(pBuffer + sizeof(int))].idade);
+            printf("  Altura: %d\n", pessoas[*(int *)(pBuffer + sizeof(int))].altura);
+            printf("\n");
+            (*(int *)(pBuffer + sizeof(int)))++; 
+        }
+    } else {
+        printf("Nenhum nome adicionado.\n");
     }
 }
 
@@ -133,12 +137,12 @@ void apagar(void *pBuffer) {
         }
         if(*int_aux) {
             if(*size > 1) {
-                printf("%d\n", *int_aux);
-                for(*i; *i < (*size - 1); (*i)++) {
+                for(; *i < (*size - 1); (*i)++) {
                     pessoas[*i] = pessoas[*i + 1]; 
                 }
             } 
             (*size)--;
+            printf("Nome apagado.\n");
         } else {
             printf("Nome nao encontrado.\n");
         }
