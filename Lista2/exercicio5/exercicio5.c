@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 typedef struct{
     char nome[30];
@@ -41,6 +40,7 @@ Pessoa* adicionar(Pessoa *pessoas, int *size) {
     pessoas = (Pessoa *) realloc(pessoas, (*size) * sizeof(Pessoa));
     if(!pessoas) { 
         printf("erro de memoria1!");
+        exit(1);
     }
     printf("Digite o nome: ");
     scanf("%s", pessoas[(*size)-1].nome);
