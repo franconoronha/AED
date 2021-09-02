@@ -29,7 +29,7 @@ int main() {
                 free(pessoas);
                 exit(0);
             default:
-                printf("Opcao invalida.");
+                printf("Opcao invalida.\n");
                 break;
         }
     }
@@ -38,19 +38,21 @@ int main() {
 
 Pessoa* adicionar(Pessoa *pessoas, int *size) {
     (*size)++;
-    pessoas = realloc(pessoas, (*size) * sizeof(Pessoa));
+    pessoas = (Pessoa *) realloc(pessoas, (*size) * sizeof(Pessoa));
     if(!pessoas) { 
         printf("erro de memoria1!");
     }
-
     printf("Digite o nome: ");
-    scanf("%s", (pessoas + ((*size - 1)* sizeof(Pessoa)))->nome);
+    scanf("%s", pessoas[(*size)-1].nome);
+    setbuf(stdin, NULL);
 
     printf("Digite o idade: ");
-    scanf("%d", &(pessoas + ((*size - 1)* sizeof(Pessoa)))->idade);
+    scanf("%d", &pessoas[(*size)-1].idade);
+    setbuf(stdin, NULL);
 
     printf("Digite o altura: ");
-    scanf("%d", &(pessoas + ((*size - 1)* sizeof(Pessoa)))->altura);
+    scanf("%d", &pessoas[(*size)-1].altura);
+    setbuf(stdin, NULL);
 
     return pessoas;
 }
@@ -60,9 +62,9 @@ void listar(Pessoa *pessoas, int size) {
     if(size > 0) {
         printf("  --- Lista de Pessoas ---\n");
         for(i = 0; i < size; i++) {
-            printf("%d) Nome: %s\n", (i + 1), (pessoas + (i * sizeof(Pessoa)))->nome);
-            printf("Idade: %d\n", (pessoas + (i * sizeof(Pessoa)))->idade);
-            printf("Altura: %d\n", (pessoas + (i * sizeof(Pessoa)))->altura);
+            printf("%d) Nome: %s\n", (i + 1), pessoas[i].nome);
+            printf("Idade: %d\n", pessoas[i].idade);
+            printf("Altura: %d\n", pessoas[i].altura);
             printf("\n");
         }
     } else {
