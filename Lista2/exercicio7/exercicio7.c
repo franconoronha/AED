@@ -19,6 +19,7 @@ int main() {
     void *pBuffer = malloc(sizeof(int) * 3 + sizeof(char) * 10); // size, for, int_aux, nome_auxiliar
     if(!pBuffer) { 
         printf("erro de memoria inicio\n");
+        exit(1);
     }
     *(int *)pBuffer = 0;
     // pBuffer = size
