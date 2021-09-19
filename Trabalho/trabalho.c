@@ -10,8 +10,7 @@ void apagar(void *pBuffer);
 
 int main() {
     void *pBuffer = malloc(sizeof(void *) * 2 + sizeof(int) + sizeof(char) * 10);
-    // fim | inicio | escolha(i) | size | nome_apagar...
-    *(void **)pBuffer = NULL;
+    // fim | inicio | escolha | size | nome_apagar/busscar    *(void **)pBuffer = NULL;
     *(void **)(pBuffer + sizeof(void *)) = NULL;
 
     if(!pBuffer) {
@@ -188,7 +187,7 @@ void apagar(void *pBuffer) {
                 ant_q = *(void **)q;
                 prox_q = *(void **)(q + sizeof(void *));
                 
-                if(prox_q == ant_q) { // certa
+                if(prox_q == ant_q) {
                     *(void **)pBuffer = NULL;
                     *(void **)(pBuffer + sizeof(void *)) = NULL;
                 } 
@@ -196,7 +195,7 @@ void apagar(void *pBuffer) {
                     *(void **)(ant_q + sizeof(void *)) = NULL;
                     *(void **)(pBuffer + sizeof(void *)) = ant_q;
                 } 
-                else if(ant_q == NULL) { // certa
+                else if(ant_q == NULL) {
                     *(void **)prox_q = NULL;
                     *(void **)pBuffer = prox_q;
                 } 
