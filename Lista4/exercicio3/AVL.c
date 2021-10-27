@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#define COUNT 10
 
 typedef struct nodo nodo;
 struct nodo{
@@ -8,6 +9,39 @@ struct nodo{
     nodo* nEsquerda;
     nodo* nDireita;
 };
+
+// Function to print binary tree in 2D
+// https://www.geeksforgeeks.org/print-binary-tree-2-dimensions/
+// It does reverse inorder traversal
+void print2DUtil(nodo *root, int space)
+{
+    // Base case
+    if (root == NULL)
+        return;
+ 
+    // Increase distance between levels
+    space += COUNT;
+ 
+    // Process right child first
+    print2DUtil(root->nDireita, space);
+ 
+    // Print current node after space
+    // count
+    printf("\n");
+    for (int i = COUNT; i < space; i++)
+        printf(" ");
+    printf("%d\n", root->valor);
+ 
+    // Process left child
+    print2DUtil(root->nEsquerda, space);
+}
+ 
+// Wrapper over print2DUtil()
+void print2D(nodo *root)
+{
+   // Pass initial space count as 0
+   print2DUtil(root, 0);
+}
 
 void insere(int valor, nodo** raiz);
 int altura(nodo* raiz);
@@ -20,18 +54,26 @@ void balanceia(nodo** raiz);
 int main() {
     srand(time(0));
     nodo* raiz = NULL;
-    int num_nodos, i;
-    int a;
+    int num_nodos, i, a;
+    
     printf("Escolha a quantidade de nodos da arvore AVL: ");
     scanf("%d", &num_nodos);
 
+    printf("Ordem de insercao: ");
     for(i = 0; i < num_nodos; i++) {
         a = rand();
         printf("%d ", a);
         insere(a, &raiz);
     }
 
-    printf("\nResultado: %d", verificaAVL(raiz));
+    print2D(raiz);
+
+    if(verificaAVL(raiz)) {
+        printf("\nA arvore esta balanceada corretamente.");
+    } else {
+        printf("\nErro: a arvore nao esta balanceada corretamente.");
+    }
+    
     return 0;
 }
 
@@ -43,15 +85,13 @@ void insere(int valor, nodo** raiz) {
         (*raiz)->nDireita = NULL;
         return;
     }
-    if(valor < (*raiz)->valor) {
+    else if(valor < (*raiz)->valor) {
         insere(valor, &((*raiz)->nEsquerda));
         balanceia(raiz);
-        return;
     }
     else if(valor > (*raiz)->valor) {
         insere(valor, &((*raiz)->nDireita));
         balanceia(raiz);
-        return;
     } else {
         printf("Erro: valor ja consta na arvore.\n");
     }
