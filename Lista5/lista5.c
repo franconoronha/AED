@@ -30,7 +30,7 @@ void insertion_sort(int array[], int size);
 void quicksort(int array[], int left, int right);
 int verifica(int array[], int size);
 
-void main() {
+int main() {
     srand(time(NULL));
     double begin, end, tempo;
     int num_elementos, i, escolha, mostrar = -1;
@@ -110,6 +110,8 @@ void main() {
 
         free(array);
     }
+
+    return 0;
 }
 
 void quicksort(int array[], int left, int right) {
@@ -179,12 +181,12 @@ void merge(int array[], int l, int m, int r)
     int n2 = r - m;
   
     int *L = (int *)malloc(sizeof(int) * (n1));
-    if(L == null){
-        print("Erro");
+    if(L == NULL){
+        printf("Erro");
         return;
     }
     int *R = (int *)malloc(sizeof(int) * (n2));
-    if(R == null){
+    if(R == NULL){
         printf("Erro!\n");
         free(L);
         return;
