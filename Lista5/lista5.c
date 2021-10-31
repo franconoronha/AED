@@ -70,21 +70,18 @@ int main() {
             printf("\n----------------");
         }
 
+        begin = get_cpu_time();
         switch(escolha) {
             case 1:
-                begin = get_cpu_time();
                 selection_sort(array, num_elementos);
                 break;
             case 2:
-                begin = get_cpu_time();
                 insertion_sort(array, num_elementos);
                 break;
             case 3:
-                begin = get_cpu_time();
                 quicksort(array,0,(num_elementos - 1));
                 break;
             case 4:
-                begin = get_cpu_time();
                 mergeSort(array,0,(num_elementos - 1));
                 break;
             default:
