@@ -178,10 +178,17 @@ void merge(int array[], int l, int m, int r)
     int n1 = m - l + 1;
     int n2 = r - m;
   
-    /* int L[n1], R[n2]; */
     int *L = (int *)malloc(sizeof(int) * (n1));
+    if(L == null){
+        print("Erro");
+        return;
+    }
     int *R = (int *)malloc(sizeof(int) * (n2));
-  
+    if(R == null){
+        printf("Erro!\n");
+        free(L);
+        return;
+    }
     for (i = 0; i < n1; i++)
         L[i] = array[l + i];
     for (j = 0; j < n2; j++)
