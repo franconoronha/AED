@@ -16,21 +16,23 @@
         }
     }
 
-//  Posix/Linux
+//  Linux
 #else
     double get_cpu_time() {
         return (double)clock() / CLOCKS_PER_SEC;
     }
 #endif
 
-int verifica(int array[], int size);
+void merge(int array[], int l, int m, int r);
+void mergeSort(int array[], int l, int r);
 void selection_sort(int array[], int size);
 void insertion_sort(int array[], int size);
 void quicksort(int array[], int left, int right);
+int verifica(int array[], int size);
 
 void main() {
     srand(time(NULL));
-    double begin, end, elapsed;
+    double begin, end, tempo;
     int num_elementos, i, escolha, mostrar = -1;
 
     
@@ -44,21 +46,25 @@ void main() {
         printf("\n 6 - Sair");
         printf("\nEscolha o algoritmo desejado: ");
         scanf("%d", &escolha);
+        
         if(escolha == 5) {
                 mostrar *= -1;
                 continue;
         }
         if(escolha == 6) exit(0);
 
-
         printf("Escolha a quantidade de elementos do array: ");
         scanf("%d", &num_elementos);
+        setbuf(stdin, NULL);
         int *array = (int *)malloc(sizeof(int) * num_elementos);
+
+        for(i = 0; i < num_elementos; i++) {
+            array[i] = rand() % 10000;
+        }
 
         if(mostrar == 1) {
             printf("Array: ");
             for(i = 0; i < num_elementos; i++) {
-                array[i] = rand() % 1000;
                 printf("%d ", array[i]);
             }
             printf("\n----------------");
@@ -79,13 +85,14 @@ void main() {
                 break;
             case 4:
                 begin = get_cpu_time();
+                mergeSort(array,0,(num_elementos - 1));
                 break;
             default:
                 printf("Opcao invalida.");
         }
 
         end = get_cpu_time();
-        double elapsed = (end - begin);
+        tempo = (end - begin);
 
         if(mostrar == 1) {
             printf("\nResultado: ");
@@ -94,7 +101,7 @@ void main() {
             }
         }
 
-        printf("Tempo decorrido: %0.6lfs\n", elapsed);
+        printf("Tempo decorrido: %0.6lfs\n", tempo);
 
         if(verifica(array, num_elementos))
             printf("Sucesso: O vetor foi ordenado corretamente!\n");
@@ -164,3 +171,62 @@ void insertion_sort(int array[], int size) {
         array[j+1] = ins;
     }
 }
+
+void merge(int array[], int l, int m, int r)
+{
+    int i, j, k;
+    int n1 = m - l + 1;
+    int n2 = r - m;
+  
+    /* int L[n1], R[n2]; */
+    int *L = (int *)malloc(sizeof(int) * (n1));
+    int *R = (int *)malloc(sizeof(int) * (n2));
+  
+    for (i = 0; i < n1; i++)
+        L[i] = array[l + i];
+    for (j = 0; j < n2; j++)
+        R[j] = array[m + 1 + j];
+  
+    i = 0; 
+    j = 0; 
+    k = l; 
+    while (i < n1 && j < n2) {
+        if (L[i] <= R[j]) {
+            array[k] = L[i];
+            i++;
+        }
+        else {
+            array[k] = R[j];
+            j++;
+        }
+        k++;
+    }
+  
+    while (i < n1) {
+        array[k] = L[i];
+        i++;
+        k++;
+    }
+  
+    while (j < n2) {
+        array[k] = R[j];
+        j++;
+        k++;
+    }
+
+    free(L);
+    free(R);
+}
+  
+void mergeSort(int array[], int l, int r)
+{
+    if (l < r) {
+        int m = l + (r - l) / 2;
+  
+        mergeSort(array, l, m);
+        mergeSort(array, m + 1, r);
+  
+        merge(array, l, m, r);
+    }
+}
+  
